@@ -1,14 +1,16 @@
 import React from "react";
 import { PageName } from "../ui/PageName";
 import { SearchInput } from "../ui/SearchInput";
-import { Button } from "../ui/Button";
+import { Button } from "../Button/Button";
+import { ToggleMode } from "../Togglemode/ToggleMode";
 
-export const Header = () => {
+export const Header = ({ isLightMode, setIsLightMode }) => {
   return (
-    <div>
-      <PageName label={"Notes"} />
+    <div className="flex items-center justify-between gap-3 mt-6">
+      <PageName label={"Notes"} className="flex-auto" />
       <SearchInput />
-      <Button label="New Note" />
+      <ToggleMode isLightMode={isLightMode} setIsLightMode={setIsLightMode} />
+      <Button type="primary" label="New Note" />
     </div>
   );
 };
