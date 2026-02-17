@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Paperclip, User, Tag, Calendar } from "lucide-react";
 
-export default function TaskCard() {
+export default function TaskCard({ onClose }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const handleCreate = () => {
+    onClose();
+  };
 
   return (
     <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl shadow-xl p-6 text-slate-300">
@@ -50,7 +53,10 @@ export default function TaskCard() {
           Attach a file
         </button>
 
-        <button className="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-lg font-medium transition">
+        <button
+          onClick={() => handleCreate()}
+          className="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-lg font-medium transition"
+        >
           Create
         </button>
       </div>

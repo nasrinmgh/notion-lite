@@ -5,9 +5,7 @@ import TaskCard from "../TaskCard/TaskCard";
 
 export const AppLayout = ({ isLightMode, setIsLightMode }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const onAddTask = () => {
-    setIsOpen(!isOpen);
-  };
+
   return (
     <div className=" flex flex-col items-center justify-center gap-6">
       <Header
@@ -16,7 +14,7 @@ export const AppLayout = ({ isLightMode, setIsLightMode }) => {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-      <TaskCard />
+      {isOpen && <TaskCard onClose={() => setIsOpen(false)} />}
       <SideBar />
     </div>
   );
