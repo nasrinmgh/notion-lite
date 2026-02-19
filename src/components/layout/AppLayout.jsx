@@ -8,6 +8,9 @@ import { PreDisplay } from "../pages/PreDisplay";
 export const AppLayout = ({ isLightMode, setIsLightMode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const handleDelete = (id) => {
+    setTasks((prev) => prev.filter((task) => task.id !== id));
+  };
 
   return (
     <div className=" flex flex-col items-center justify-center gap-6">
@@ -26,7 +29,7 @@ export const AppLayout = ({ isLightMode, setIsLightMode }) => {
           }}
         />
       )}
-      <TasksContainer tasks={tasks} />
+      <TasksContainer tasks={tasks} onDelete={handleDelete} />
       <SideBar />
     </div>
   );

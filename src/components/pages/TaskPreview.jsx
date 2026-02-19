@@ -1,6 +1,7 @@
 import React from "react";
+import { Trash2, Pin } from "lucide-react";
 
-export const TaskPreview = ({ task }) => {
+export const TaskPreview = ({ task, onDelete }) => {
   return (
     <div className="group w-full max-w-sm bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-all duration-200">
       <div className="flex items-start justify-between mb-2">
@@ -22,11 +23,6 @@ export const TaskPreview = ({ task }) => {
       <p className="text-sm text-slate-600 mb-6 line-clamp-3 leading-relaxed">
         {task.description}
       </p>
-      <div className="mt-auto">
-        <span className="text-xs text-slate-400 font-medium">
-          {timeAgo || "Just now"}
-        </span>
-      </div>
     </div>
   );
 };
