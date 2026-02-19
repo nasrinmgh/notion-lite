@@ -1,10 +1,20 @@
 import { useState } from "react";
 import { Paperclip, User, Tag, Calendar } from "lucide-react";
 
-export default function TaskCard({ onClose }) {
+export default function TaskCard({ onClose, setTaskData }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const handleCreate = () => {
+    if (!description.trim()) {
+      return; // stop creation
+    }
+
+    const newTask = {
+      id: Date.now(),
+      title,
+      description,
+    };
+    setTaskData(newTask);
     onClose();
   };
 

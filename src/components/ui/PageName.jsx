@@ -1,5 +1,5 @@
 import React from "react";
 
 export const PageName = ({ label }) => {
-  return <div className="">{label}</div>;
+  return <h2 className="">{label}</h2>;
 };
