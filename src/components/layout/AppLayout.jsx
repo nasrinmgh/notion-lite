@@ -4,6 +4,7 @@ import { SideBar } from "./SideBar";
 import TaskCard from "../TaskCard/TaskCard";
 import { TasksContainer } from "../pages/TasksContainer";
 import { PreDisplay } from "../pages/PreDisplay";
+import { TaskPreview } from "../pages/TaskPreview";
 
 export const AppLayout = ({ isLightMode, setIsLightMode }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +21,7 @@ export const AppLayout = ({ isLightMode, setIsLightMode }) => {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-      <PreDisplay />
+      {tasks.length === 0 && <PreDisplay />}
       {isOpen && (
         <TaskCard
           onClose={() => setIsOpen(false)}
