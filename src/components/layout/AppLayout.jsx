@@ -4,7 +4,6 @@ import { SideBar } from "./SideBar";
 import TaskCard from "../TaskCard/TaskCard";
 import { TasksContainer } from "../pages/TasksContainer";
 import { PreDisplay } from "../pages/PreDisplay";
-import { TaskPreview } from "../pages/TaskPreview";
 
 export const AppLayout = ({ isLightMode, setIsLightMode }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,7 +29,11 @@ export const AppLayout = ({ isLightMode, setIsLightMode }) => {
           }}
         />
       )}
-      <TasksContainer tasks={tasks} onDelete={handleDelete} />
+      <TasksContainer
+        tasks={tasks}
+        onDelete={handleDelete}
+        setTasks={setTasks}
+      />
       <SideBar />
     </div>
   );
