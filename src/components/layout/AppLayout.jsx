@@ -4,6 +4,7 @@ import { SideBar } from "./SideBar";
 import TaskCard from "../TaskCard/TaskCard";
 import { TasksContainer } from "../pages/TasksContainer";
 import { PreDisplay } from "../pages/PreDisplay";
+import { FailedSearch } from "../ui/FailedSearch";
 
 export const AppLayout = ({ isLightMode, setIsLightMode }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +13,16 @@ export const AppLayout = ({ isLightMode, setIsLightMode }) => {
     setTasks((prev) => prev.filter((task) => task.id !== id));
   };
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const filteredTasks = tasks.filter((task) => {
+    task.description.toLowerCase().includes(searchTerm.toLocaleLowerCase());
+  });
+  const tasksToShow = searchTerm
+    ? filteredTasks
+    : () => {
+        <FailedSearch />;
+      };
+
   return (
     <div className=" flex flex-col items-center justify-center gap-6">
       <Header
@@ -19,6 +30,7 @@ export const AppLayout = ({ isLightMode, setIsLightMode }) => {
         setIsLightMode={setIsLightMode}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        setSearchTerm={setSearchTerm}
       />
       {tasks.length === 0 && <PreDisplay />}
       {isOpen && (

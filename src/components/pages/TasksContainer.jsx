@@ -16,13 +16,13 @@ export const TasksContainer = ({ tasks, setTasks }) => {
     setTasks((prev) => prev.filter((task) => task.id !== selectedTaskId));
     setIsModalOpen(false);
   };
+
   return (
     <div className=" grid grid-cols-[300px_300px] gap-4">
       <DeleteTaskModal
         isOpen={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         onConfirm={handleConfirmDelete}
-        taskTitle={tasks.id}
       />
       {tasks.map((task) => (
         <TaskPreview
