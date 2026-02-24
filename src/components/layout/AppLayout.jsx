@@ -9,19 +9,18 @@ import { FailedSearch } from "../ui/FailedSearch";
 export const AppLayout = ({ isLightMode, setIsLightMode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const handleDelete = (id) => {
     setTasks((prev) => prev.filter((task) => task.id !== id));
   };
 
-  const [searchTerm, setSearchTerm] = useState("");
   const filteredTasks = tasks.filter((task) => {
-    task.description.toLowerCase().includes(searchTerm.toLocaleLowerCase());
+    return task.description.toLowerCase().includes(searchTerm.toLowerCase());
   });
-  const tasksToShow = searchTerm
-    ? filteredTasks
-    : () => {
-        <FailedSearch />;
-      };
+
+  const isSearching = searchTerm.length > 0;
+  const hasNoResults = isSearching && filteredTasks.length === 0;
 
   return (
     <div className=" flex flex-col items-center justify-center gap-6">
@@ -32,7 +31,10 @@ export const AppLayout = ({ isLightMode, setIsLightMode }) => {
         setIsOpen={setIsOpen}
         setSearchTerm={setSearchTerm}
       />
+
       {tasks.length === 0 && <PreDisplay />}
+      {hasNoResults && <FailedSearch />}
+
       {isOpen && (
         <TaskCard
           onClose={() => setIsOpen(false)}
@@ -41,11 +43,15 @@ export const AppLayout = ({ isLightMode, setIsLightMode }) => {
           }}
         />
       )}
-      <TasksContainer
-        tasks={tasks}
-        onDelete={handleDelete}
-        setTasks={setTasks}
-      />
+
+      {!hasNoResults && tasks.length > 0 && (
+        <TasksContainer
+          tasks={isSearching ? filteredTasks : tasks}
+          setTasks={setTasks}
+          onDelete={handleDelete}
+        />
+      )}
+
       <SideBar />
     </div>
   );
