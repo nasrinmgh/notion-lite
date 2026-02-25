@@ -8,6 +8,7 @@ export const Header = ({
   isLightMode,
   setIsLightMode,
   setIsOpen,
+  searchTerm,
   setSearchTerm,
 }) => {
   return (
@@ -16,6 +17,7 @@ export const Header = ({
       <div className="flex justify-center items-center gap-2">
         <SearchInput
           className="w-64 flex-initial"
+          defaultValue={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <ToggleMode

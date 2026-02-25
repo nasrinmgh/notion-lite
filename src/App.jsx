@@ -1,6 +1,4 @@
 import React from "react";
-import { Header } from "./components/layout/Header";
-import { SideBar } from "./components/layout/SideBar";
 import { useState, useEffect } from "react";
 import { AppLayout } from "./components/layout/AppLayout";
 export const App = () => {
@@ -12,9 +10,9 @@ export const App = () => {
   }, [isLightMode]);
 
   return (
-    <>
+    <div className="flex flex-col justify-center items-center gap-5">
       <AppLayout isLightMode={isLightMode} setIsLightMode={setIsLightMode} />
-    </>
+    </div>
   );
 };
 

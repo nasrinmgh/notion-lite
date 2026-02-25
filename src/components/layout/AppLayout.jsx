@@ -20,7 +20,7 @@ export const AppLayout = ({ isLightMode, setIsLightMode }) => {
   });
 
   const isSearching = searchTerm.length > 0;
-  const hasNoResults = isSearching && filteredTasks.length === 0;
+  const hasNoResults = isSearching && filteredTasks.length == 0;
 
   return (
     <div className=" flex flex-col items-center justify-center gap-6">
@@ -29,10 +29,11 @@ export const AppLayout = ({ isLightMode, setIsLightMode }) => {
         setIsLightMode={setIsLightMode}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
 
-      {tasks.length === 0 && <PreDisplay />}
+      {tasks.length == 0 && <PreDisplay />}
       {hasNoResults && <FailedSearch />}
 
       {isOpen && (
