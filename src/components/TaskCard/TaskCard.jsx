@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Paperclip, User, Tag, Calendar } from "lucide-react";
+import { Paperclip, User, Tag, Calendar, CheckIcon } from "lucide-react";
 
 export default function TaskCard({ onClose, setTaskData }) {
   const [title, setTitle] = useState("");
@@ -21,17 +21,22 @@ export default function TaskCard({ onClose, setTaskData }) {
   return (
     <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl shadow-xl p-6 text-slate-300">
       {/* Title */}
-      <input
-        type="text"
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        className="w-full bg-transparent text-lg placeholder-slate-500 outline-none mb-4"
-      />
-
+      <div className="flex flex-row items-center justify-around">
+        <input
+          type="text"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="w-full bg-transparent text-lg placeholder-slate-500 outline-none mb-4"
+        />
+        {/* Automitic save */}
+        <div className="flex flex-row justify-between items-center w-43">
+          <p className="text-sm">Saved just now</p> <CheckIcon size={14} />
+        </div>
+      </div>
       {/* Description */}
       <textarea
-        placeholder="Write a description..."
+        placeholder="Start writing..."
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         rows={3}
