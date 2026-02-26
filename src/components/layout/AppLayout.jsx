@@ -5,11 +5,13 @@ import TaskCard from "../TaskCard/TaskCard";
 import { TasksContainer } from "../pages/TasksContainer";
 import { PreDisplay } from "../pages/PreDisplay";
 import { FailedSearch } from "../ui/FailedSearch";
+import { TaskPreview } from "../pages/TaskPreview";
 
 export const AppLayout = ({ isLightMode, setIsLightMode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedTask, setSelectedTask] = useState(null);
 
   const handleDelete = (id) => {
     setTasks((prev) => prev.filter((task) => task.id !== id));
@@ -33,9 +35,8 @@ export const AppLayout = ({ isLightMode, setIsLightMode }) => {
         setSearchTerm={setSearchTerm}
       />
 
-      {tasks.length == 0 && <PreDisplay />}
+      {tasks.length == 0 && !isOpen && <PreDisplay />}
       {hasNoResults && <FailedSearch />}
-
       {isOpen && (
         <TaskCard
           onClose={() => setIsOpen(false)}
@@ -44,13 +45,17 @@ export const AppLayout = ({ isLightMode, setIsLightMode }) => {
           }}
         />
       )}
-
       {!hasNoResults && tasks.length > 0 && (
         <TasksContainer
           tasks={isSearching ? filteredTasks : tasks}
           setTasks={setTasks}
           onDelete={handleDelete}
+          setIsOpen={setIsOpen}
+          setSelectedTask={setSelectedTask}
         />
+      )}
+      {selectedTask && (
+        <TaskCard task={selectedTask} onClose={() => setSelectedTask(null)} />
       )}
 
       <SideBar />
