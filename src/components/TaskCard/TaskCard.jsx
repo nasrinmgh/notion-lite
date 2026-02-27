@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Paperclip, User, Tag, Calendar, CheckIcon } from "lucide-react";
+import { Paperclip, User, Tag, Calendar, XIcon } from "lucide-react";
 
-export default function TaskCard({ onClose, setTaskData }) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+export default function TaskCard({ onClose, setTaskData, task }) {
+  const [title, setTitle] = useState(task?.title || "");
+  const [description, setDescription] = useState(task?.description || "");
   const handleCreate = () => {
     if (!description.trim()) {
       return; // stop creation
@@ -21,7 +21,7 @@ export default function TaskCard({ onClose, setTaskData }) {
   return (
     <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl shadow-xl p-6 text-slate-300">
       {/* Title */}
-      <div className="flex flex-row items-center justify-around">
+      <div className="flex flex-row items-baseline justify-around">
         <input
           type="text"
           placeholder="Title"
@@ -29,10 +29,12 @@ export default function TaskCard({ onClose, setTaskData }) {
           onChange={(e) => setTitle(e.target.value)}
           className="w-full bg-transparent text-lg placeholder-slate-500 outline-none mb-4"
         />
-        {/* Automitic save */}
-        <div className="flex flex-row justify-between items-center w-43">
-          <p className="text-sm">Saved just now</p> <CheckIcon size={14} />
-        </div>
+        <button
+          onClick={onClose}
+          className="flex items-center gap-2 hover:text-slate-700 text-sm transition"
+        >
+          <XIcon size={14} />
+        </button>
       </div>
       {/* Description */}
       <textarea
