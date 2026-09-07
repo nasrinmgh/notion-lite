@@ -18,11 +18,16 @@ export const AppLayout = ({ isLightMode, setIsLightMode }) => {
   };
 
   const filteredTasks = tasks.filter((task) => {
-    return task.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const search = searchTerm.trim().toLowerCase();
+
+    return (
+      task.title.toLowerCase().includes(search) ||
+      task.description.toLowerCase().includes(search)
+    );
   });
 
   const isSearching = searchTerm.length > 0;
-  const hasNoResults = isSearching && filteredTasks.length == 0;
+  const hasNoResults = isSearching && filteredTasks.length === 0;
 
   return (
     <div className=" flex flex-col items-center justify-center gap-6">
@@ -35,7 +40,7 @@ export const AppLayout = ({ isLightMode, setIsLightMode }) => {
         setSearchTerm={setSearchTerm}
       />
 
-      {tasks.length == 0 && !isOpen && <PreDisplay />}
+      {tasks.length === 0 && !isOpen && <PreDisplay />}
       {hasNoResults && <FailedSearch />}
       {isOpen && (
         <TaskCard
@@ -55,7 +60,15 @@ export const AppLayout = ({ isLightMode, setIsLightMode }) => {
         />
       )}
       {selectedTask && (
-        <TaskCard task={selectedTask} onClose={() => setSelectedTask(null)} />
+        <TaskCard
+          task={selectedTask}
+          onClose={() => setSelectedTask(null)}
+          setTaskData={(updated) =>
+            setTasks((prev) =>
+              prev.map((t) => (t.id === updated.id ? updated : t)),
+            )
+          }
+        />
       )}
 
       <SideBar />

@@ -26,7 +26,7 @@ export const SearchInput = ({ value, onChange }) => {
         defaultValue={value}
         onChange={onChange}
         placeholder="Search"
-        className="flx-1"
+        className="flex-1"
       />
     </label>
   );

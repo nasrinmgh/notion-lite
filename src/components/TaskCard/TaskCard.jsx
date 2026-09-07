@@ -4,17 +4,18 @@ import { Paperclip, User, Tag, Calendar, XIcon } from "lucide-react";
 export default function TaskCard({ onClose, setTaskData, task }) {
   const [title, setTitle] = useState(task?.title || "");
   const [description, setDescription] = useState(task?.description || "");
-  const handleCreate = () => {
-    if (!description.trim()) {
-      return; // stop creation
+  const handleSubmit = () => {
+    if (!title.trim() || !description.trim()) return;
+    if (task) {
+      // editing existing task
+      setTaskData({ ...task, title, description });
+    } else {
+      setTaskData({
+        id: crypto.randomUUID(),
+        title: title.trim(),
+        description: description.trim(),
+      });
     }
-
-    const newTask = {
-      id: Date.now(),
-      title,
-      description,
-    };
-    setTaskData(newTask);
     onClose();
   };
 
@@ -30,7 +31,7 @@ export default function TaskCard({ onClose, setTaskData, task }) {
           className="w-full bg-transparent text-lg placeholder-slate-500 outline-none mb-4"
         />
         <button
-          onClick={onClose}
+          onClick={() => onClose()}
           className="flex items-center gap-2 hover:text-slate-700 text-sm transition"
         >
           <XIcon size={14} />
@@ -71,10 +72,10 @@ export default function TaskCard({ onClose, setTaskData, task }) {
         </button>
 
         <button
-          onClick={() => handleCreate()}
+          onClick={() => handleSubmit()}
           className="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-lg font-medium transition"
         >
-          Create
+          {task ? "Save changes" : "Create"}
         </button>
       </div>
     </div>
