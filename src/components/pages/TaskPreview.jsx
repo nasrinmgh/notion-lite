@@ -1,9 +1,9 @@
 import React from "react";
 import { Trash2, Pin } from "lucide-react";
-export const TaskPreview = ({ task, onDelete, onClick }) => {
+export const TaskPreview = ({ task, onDelete, setTaskEditor }) => {
   return (
     <div
-      onClick={onClick}
+      onClick={() => setTaskEditor(task)}
       className="group w-full max-w-sm bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-all duration-200"
     >
       <div className="flex items-start justify-between mb-2">

@@ -4,18 +4,26 @@ import { Paperclip, User, Tag, Calendar, XIcon } from "lucide-react";
 export default function TaskCard({ onClose, setTaskData, task }) {
   const [title, setTitle] = useState(task?.title || "");
   const [description, setDescription] = useState(task?.description || "");
+
   const handleSubmit = () => {
-    if (!title.trim() || !description.trim()) return;
+    if (!description.trim()) return;
+
     if (task) {
-      // editing existing task
-      setTaskData({ ...task, title, description });
+      // Editing existing task
+      setTaskData({
+        ...task,
+        title: title.trim(),
+        description: description.trim(),
+      });
     } else {
+      // Creating new task
       setTaskData({
         id: crypto.randomUUID(),
         title: title.trim(),
         description: description.trim(),
       });
     }
+
     onClose();
   };
 

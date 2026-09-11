@@ -2,9 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { TaskPreview } from "./TaskPreview";
 import DeleteTaskModal from "../ui/DeleteTaskModal";
-import TaskCard from "../TaskCard/TaskCard";
 
-export const TasksContainer = ({ tasks, setTasks, setSelectedTask }) => {
+export const TasksContainer = ({ tasks, setTasks, setTaskEditor }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
 
@@ -30,7 +29,7 @@ export const TasksContainer = ({ tasks, setTasks, setSelectedTask }) => {
           key={task.id}
           task={task}
           onDelete={() => openDeleteModal(task.id)}
-          onClick={() => setSelectedTask(task)}
+          setTaskEditor={setTaskEditor}
         />
       ))}
     </div>

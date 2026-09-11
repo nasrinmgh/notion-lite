@@ -7,7 +7,7 @@ import { ToggleMode } from "../Togglemode/ToggleMode";
 export const Header = ({
   isLightMode,
   setIsLightMode,
-  setIsOpen,
+  handleCreate,
   searchTerm,
   setSearchTerm,
 }) => {
@@ -29,7 +29,7 @@ export const Header = ({
       <Button
         type="primary"
         label="New Note"
-        onClick={() => setIsOpen(true)}
+        onClick={handleCreate}
         className="w-32 flex-initial"
       />
     </div>

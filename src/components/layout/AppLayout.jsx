@@ -3,30 +3,40 @@ import { Header } from "./Header";
 import { SideBar } from "./SideBar";
 import TaskCard from "../TaskCard/TaskCard";
 import { TasksContainer } from "../pages/TasksContainer";
-import { PreDisplay } from "../pages/PreDisplay";
-import { FailedSearch } from "../ui/FailedSearch";
-import { TaskPreview } from "../pages/TaskPreview";
+import { File, Search } from "lucide-react";
+import { EmptyState } from "../ui/EmptyState ";
 
 export const AppLayout = ({ isLightMode, setIsLightMode }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedTask, setSelectedTask] = useState(null);
+  const [taskEditor, setTaskEditor] = useState(null);
 
+  const handleCreate = () => {
+    setTaskEditor("create");
+  };
+
+  const handleSaveNewTask = (newTask) => {
+    setTasks((prev) => [...prev, newTask]);
+    setTaskEditor(null);
+  };
   const handleDelete = (id) => {
     setTasks((prev) => prev.filter((task) => task.id !== id));
   };
+  const handleUpdate = (updated) => {
+    setTasks((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
 
+    setTaskEditor(null);
+  };
+  // * Search & Filter  logics * //
+  const search = searchTerm.trim().toLowerCase();
+  const isSearching = search.length > 0;
   const filteredTasks = tasks.filter((task) => {
-    const search = searchTerm.trim().toLowerCase();
-
     return (
       task.title.toLowerCase().includes(search) ||
       task.description.toLowerCase().includes(search)
     );
   });
 
-  const isSearching = searchTerm.length > 0;
   const hasNoResults = isSearching && filteredTasks.length === 0;
 
   return (
@@ -34,20 +44,27 @@ export const AppLayout = ({ isLightMode, setIsLightMode }) => {
       <Header
         isLightMode={isLightMode}
         setIsLightMode={setIsLightMode}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
+        // isOpen={isOpen}
+        // setIsOpen={setIsOpen}
+        handleCreate={handleCreate}
+        //setTaskEditor={setTaskEditor}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
 
-      {tasks.length === 0 && !isOpen && <PreDisplay />}
-      {hasNoResults && <FailedSearch />}
-      {isOpen && (
-        <TaskCard
-          onClose={() => setIsOpen(false)}
-          setTaskData={(newTask) => {
-            setTasks((prev) => [...prev, newTask]);
-          }}
+      {tasks.length === 0 && (
+        <EmptyState
+          icon={File}
+          title={"No Notes Yet"}
+          message={"Create your first notes to get started"}
+        />
+      )}
+
+      {hasNoResults && (
+        <EmptyState
+          icon={Search}
+          title={"No Notes Found"}
+          message={"Try a different search item"}
         />
       )}
       {!hasNoResults && tasks.length > 0 && (
@@ -55,22 +72,22 @@ export const AppLayout = ({ isLightMode, setIsLightMode }) => {
           tasks={isSearching ? filteredTasks : tasks}
           setTasks={setTasks}
           onDelete={handleDelete}
-          setIsOpen={setIsOpen}
-          setSelectedTask={setSelectedTask}
+          setTaskEditor={setTaskEditor}
+          //setIsOpen={setIsOpen}
+          //  setSelectedTask={setSelectedTask}
         />
       )}
-      {selectedTask && (
-        <TaskCard
-          task={selectedTask}
-          onClose={() => setSelectedTask(null)}
-          setTaskData={(updated) =>
-            setTasks((prev) =>
-              prev.map((t) => (t.id === updated.id ? updated : t)),
-            )
-          }
-        />
+      {taskEditor && (
+        <div className="fixed inset-0 flex items-center justify-center">
+          <TaskCard
+            task={taskEditor === "create" ? null : taskEditor}
+            onClose={() => setTaskEditor(null)}
+            setTaskData={
+              taskEditor === "create" ? handleSaveNewTask : handleUpdate
+            }
+          />
+        </div>
       )}
-
       <SideBar />
     </div>
   );
